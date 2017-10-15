@@ -1,0 +1,11 @@
+extends ../layout
+
+block content
+    h1="Selamat datang di pelanggan"
+    form(id='idpelanggan' method='post' action='')
+        input(id='idpesan' type='text')
+        input(id='idkirim' type='button' value='simpan')
+
+    script(src='./javascripts/socket.io.js')
+    script var socket=io.connect('http://localhost:3000'); socket.on('connect', function(data){ socket.emit('join', 'pesan dari client');});
+    script(src='./javascripts/pesan.js')

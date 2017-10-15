@@ -1,0 +1,40 @@
+//global
+let express = require('express');
+let mong = require('mongoose');
+let bodyParser = require('body-parser');
+let app = express();
+app.use(bodyParser.json());
+let verifyToken = require('./middleware/verifyToken');
+app.use('/', function ( req, res, next) {
+    res.header("Access-Control-Allow-Origin","*");
+    res.header("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods","GET, POST, OPTIONS, PUT, DELETE");    
+    next();
+});
+let loginRoute = require('./login/loginRoute');
+app.use('/api',loginRoute);
+let pelangganRoute = require('./pelanggan/pelangganRoute');
+app.use('/api',pelangganRoute);
+let petugasRoute = require('./petugas/petugasRoute');
+app.use('/api',verifyToken,petugasRoute);
+let propinsiRoute = require('./propinsi/propinsiRoute');
+app.use('/api',propinsiRoute);
+let tokoRoute = require('./toko/tokoRoute');
+app.use('/api',tokoRoute);
+let kodeAksesRoute = require('./kodeAkses/kodeAksesRoute');
+app.use('/api',kodeAksesRoute);
+let obatRoute = require('./obat/obatRoute');
+app.use('/api',obatRoute);
+let penjualanRoute = require('./penjualan/penjualanRoute');
+app.use('/api',penjualanRoute);
+let tipePembayaranRoute = require('./tipePembayaran/tipePembayaranRoute');
+app.use('/api',tipePembayaranRoute);
+let statusPembayaranRoute = require('./statusPembayaran/statusPembayaranRoute');
+app.use('/api',statusPembayaranRoute);
+let statusPenjualanRoute = require('./statusPenjualan/statusPenjualanRoute');
+app.use('/api',statusPenjualanRoute);
+let pembayaranRoute = require('./pembayaran/pembayaranRoute');
+app.use('/api',pembayaranRoute);
+mong.connect('mongodb://localhost:27017/apotek');
+
+app.listen(8889);
